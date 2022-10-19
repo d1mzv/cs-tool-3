@@ -1,6 +1,5 @@
 import logo from "./smoke.webp";
 import data from "./data/test.json";
-import MUIDataTable from "mui-datatables";
 import Example from "./example";
 
 function parseJson() {
@@ -16,10 +15,6 @@ function parseJson() {
   // console.log(dataArr);
   return dataArr;
 }
-
-const dataArr = parseJson();
-const columns = ["Key", "Type", "Name"];
-const options = { filterType: "checkbox" };
 
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";

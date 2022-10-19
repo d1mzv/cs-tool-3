@@ -1,4 +1,6 @@
-import { readFileSync, readdirSync, statSync } from "fs";
+// import { readFileSync, readdirSync, statSync } from "fs";
+
+const fs = require("fs");
 
 const steam_path = "C:/Program Files (x86)/Steam/";
 const cfg_path =
@@ -6,7 +8,7 @@ const cfg_path =
 const cfg_name = "de_dust2.cfg";
 
 function textToJson(steam_path, cfg_path, cfg_name) {
-  let content = readFileSync(steam_path + cfg_path + cfg_name).toString();
+  let content = fs.readFileSync(steam_path + cfg_path + cfg_name).toString();
   console.log();
   content = content.replace(/\t/g, "");
   content = content.replace(/""/g, '":"');
@@ -49,11 +51,11 @@ function getCfgFiles() {
   const steam_path = "C:/Program Files (x86)/Steam/";
   const cfg_path =
     "steamapps/common/Counter-Strike Global Offensive/csgo/addons/sourcemod/data/practicemode/grenades/";
-  let files = readdirSync(steam_path + cfg_path);
+  let files = fs.readdirSync(steam_path + cfg_path);
   files = files.filter((name) => name.includes(".cfg"));
   let newFiles = [];
   for (var i = 0; i < files.length; i++) {
-    const { mtime } = statSync(steam_path + cfg_path + files[i]);
+    const { mtime } = fs.statSync(steam_path + cfg_path + files[i]);
     const now = mtime;
     const offsetMs = now.getTimezoneOffset() * 60 * 1000;
     const dateLocal = new Date(now.getTime() - offsetMs);

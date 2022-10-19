@@ -1,6 +1,12 @@
 import { Icon, Label, Menu, Table } from "semantic-ui-react";
 
+window.api.send("toMain", "getFiles");
+window.api.receive("fromMain", (data) => {
+  console.log(`Received ${data} from main process`);
+});
+
 const headers = ["1", "2", "3"];
+// const headers2 = data;
 
 const TableExamplePagination = () => (
   <Table celled>
