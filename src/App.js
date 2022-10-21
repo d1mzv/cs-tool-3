@@ -2,6 +2,7 @@ import logo from "./smoke.webp";
 import data from "./data/test.json";
 import { TableExamplePagination } from "./table1";
 import { useState, useEffect } from "react";
+import { Button } from "semantic-ui-react";
 
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
@@ -13,17 +14,22 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Create and practice your Nades</p>
-        <a
-          className="App-link"
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Open Nade Playlist
-        </a>
-        <p></p>
+        <div className="Header-block">
+          <div className="Header-block-1">
+            <img src={logo} className="App-logo" alt="logo" />
+          </div>
+          <div className="Header-block-2">
+            <p>Create Nade Practice Playlist</p>
+          </div>
+          <div className="Header-block-3">
+            <Button inverted>Sync</Button>
+          </div>
+          <div className="Header-block-4">
+            <Button primary inverted>
+              Save
+            </Button>
+          </div>
+        </div>
       </header>
       <TableExamplePagination />
     </div>

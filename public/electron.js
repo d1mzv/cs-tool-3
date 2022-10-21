@@ -20,6 +20,7 @@ function createWindow() {
       enableRemoteModule: true, // turn off remote
       preload: path.join(__dirname, "preload.js"), // use a preload script
     },
+    resizable: false,
   });
 
   // and load the index.html of the app.
