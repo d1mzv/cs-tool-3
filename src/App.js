@@ -1,20 +1,7 @@
 import logo from "./smoke.webp";
 import data from "./data/test.json";
-import Example from "./example";
-
-function parseJson() {
-  const dataArr = [];
-  var arr = data.Grenades["STEAM_1:0:573413937"];
-  for (var key in arr) {
-    if (arr.hasOwnProperty(key)) {
-      if (key !== "name") {
-        dataArr.push([key, arr[key].grenadeType, arr[key].name]);
-      }
-    }
-  }
-  // console.log(dataArr);
-  return dataArr;
-}
+import { TableExamplePagination } from "./table1";
+import { useState, useEffect } from "react";
 
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
@@ -37,14 +24,8 @@ function App() {
           Open Nade Playlist
         </a>
         <p></p>
-        {/* <MUIDataTable
-          title={"Dust2"}
-          data={dataArr}
-          columns={columns}
-          options={options}
-        /> */}
       </header>
-      <Example />
+      <TableExamplePagination />
     </div>
   );
 }

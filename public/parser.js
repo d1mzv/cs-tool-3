@@ -16,8 +16,13 @@ function textToJson(steam_path, cfg_path, cfg_name) {
   content = content.replace(/}\n"/g, '},\n"');
   content = content.replace(/"\n"/g, '",\n"');
   content = "{" + content + "}";
+  // console.log(content);
   const obj = JSON.parse(content);
-  return obj;
+  const newObj = {};
+  newObj.fileName = cfg_name;
+  newObj.data = obj;
+  let result = JSON.stringify(obj);
+  return newObj;
 }
 
 // TODO avoid sorting
@@ -47,10 +52,10 @@ function jsonToText(json) {
   return new_str;
 }
 
-function getCfgFiles() {
-  const steam_path = "C:/Program Files (x86)/Steam/";
-  const cfg_path =
-    "steamapps/common/Counter-Strike Global Offensive/csgo/addons/sourcemod/data/practicemode/grenades/";
+function getCfgFiles(steam_path, cfg_path) {
+  // const steam_path = "C:/Program Files (x86)/Steam/";
+  // const cfg_path =
+  //   "steamapps/common/Counter-Strike Global Offensive/csgo/addons/sourcemod/data/practicemode/grenades/";
   let files = fs.readdirSync(steam_path + cfg_path);
   files = files.filter((name) => name.includes(".cfg"));
   let newFiles = [];
@@ -66,8 +71,22 @@ function getCfgFiles() {
       .replace("T", " ");
     newFiles.push([files[i], str]);
   }
-  return newFiles;
+  let json = { ...newFiles };
+  let nadefiles = [];
+  for (var f in newFiles) {
+    // console.log(newFiles[f][0]);
+    nadefiles.push(textToJson(steam_path, cfg_path, newFiles[f][0]));
+  }
+  let json2 = { ...nadefiles };
+  // let result2 = JSON.stringify(json);
+  let result = {};
+  result[1] = json;
+  result[2] = json2;
+  let result1 = JSON.stringify(result);
+  return result1;
 }
+
+getCfgFiles(steam_path, cfg_path);
 
 // let json = textToJson(steam_path, cfg_path, cfg_name);
 // console.log(json);
@@ -75,3 +94,5 @@ function getCfgFiles() {
 // console.log(text);
 
 // console.log(getCfgFiles());
+
+module.exports = { textToJson, jsonToText, getCfgFiles };

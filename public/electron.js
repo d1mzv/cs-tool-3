@@ -1,4 +1,5 @@
 // ./public/electron.js
+// import { getCfgFiles } from "./parser";
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const fs = require("fs");
@@ -14,9 +15,9 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: false, // is default value after Electron v5
+      nodeIntegration: true, // is default value after Electron v5
       contextIsolation: true, // protect against prototype pollution
-      enableRemoteModule: false, // turn off remote
+      enableRemoteModule: true, // turn off remote
       preload: path.join(__dirname, "preload.js"), // use a preload script
     },
   });
@@ -39,31 +40,13 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(createWindow);
 
-ipcMain.on("toMain", (event, request, input) => {
-  console.log(request);
+ipcMain.on("toMain", (event, args) => {
+  let request = args[0];
   let result = [];
   if (request === "getFiles") {
-    // result = parser.getCfgFiles();
-    const steam_path = "C:/Program Files (x86)/Steam/";
-    const cfg_path =
-      "steamapps/common/Counter-Strike Global Offensive/csgo/addons/sourcemod/data/practicemode/grenades/";
-    const cfg_name = "de_dust2.cfg";
-    let files = fs.readdirSync(steam_path + cfg_path);
-    files = files.filter((name) => name.includes(".cfg"));
-    let newFiles = [];
-    for (var i = 0; i < files.length; i++) {
-      const { mtime } = fs.statSync(steam_path + cfg_path + files[i]);
-      const now = mtime;
-      const offsetMs = now.getTimezoneOffset() * 60 * 1000;
-      const dateLocal = new Date(now.getTime() - offsetMs);
-      const str = dateLocal
-        .toISOString()
-        .slice(0, 19)
-        .replace(/-/g, "/")
-        .replace("T", " ");
-      newFiles.push([files[i], str]);
-      result = newFiles;
-    }
+    result = parser.getCfgFiles(args[1], args[2]);
+  } else if (request === "textToJson") {
+    result = parser.textToJson(args[1], args[2], args[3]);
   }
   win.webContents.send("fromMain", result);
 });
