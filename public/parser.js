@@ -17,6 +17,7 @@ function textToJson(steam_path, cfg_path, cfg_name) {
   content = content.replace(/"\n"/g, '",\n"');
   content = "{" + content + "}";
   // console.log(content);
+  // console.log(cfg_name);
   const obj = JSON.parse(content);
   const newObj = {};
   newObj.fileName = cfg_name;
@@ -74,7 +75,7 @@ function getCfgFiles(steam_path, cfg_path) {
   let json = { ...newFiles };
   let nadefiles = [];
   for (var f in newFiles) {
-    // console.log(newFiles[f][0]);
+    console.log(newFiles[f][0]);
     nadefiles.push(textToJson(steam_path, cfg_path, newFiles[f][0]));
   }
   let json2 = { ...nadefiles };

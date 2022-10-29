@@ -1,4 +1,5 @@
 import { Icon, Label, Menu, Table } from "semantic-ui-react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useState, useEffect } from "react";
 
 const steam_path = "C:/Program Files (x86)/Steam/";
@@ -89,7 +90,7 @@ export function TableExamplePagination() {
             {tableData.map((val, key) => {
               return (
                 <Table.Row
-                  className="Row"
+                  className="Row1"
                   key={key}
                   positive
                   onClick={() => {
@@ -113,23 +114,25 @@ export function TableExamplePagination() {
 
 export function TableExamplePagination2(selectedRow) {
   return (
-    <Table celled selectable>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Type</Table.HeaderCell>
-          <Table.HeaderCell>Description</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {tableData2().map((val, key) => {
-          return (
-            <Table.Row key={key}>
-              <Table.Cell>{val.grenadeType}</Table.Cell>
-              <Table.Cell>{val.name}</Table.Cell>
-            </Table.Row>
-          );
-        })}
-      </Table.Body>
-    </Table>
+    <DragDropContext>
+      <Table celled selectable>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Type</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {tableData2().map((val, key) => {
+            return (
+              <Table.Row key={key}>
+                <Table.Cell>{val.grenadeType}</Table.Cell>
+                <Table.Cell>{val.name}</Table.Cell>
+              </Table.Row>
+            );
+          })}
+        </Table.Body>
+      </Table>
+    </DragDropContext>
   );
 }
